@@ -129,6 +129,11 @@
     <script src="sdk.bundle.js"></script>
     <script>
         "use strict";
+        // 提前设置 visitorId，避免 games/sdk/v2 尝试动态 import fingerprint2.min.js
+        // 该文件路径错误会导致 Promise 永久挂起，游戏一直转圈无法加载
+        if (window.visitorId === "null" || window.visitorId === undefined) {
+            window.visitorId = 'u_' + Math.random().toString(36).substring(2) + Date.now().toString(36);
+        }
 
         function initFbInstant() {
             var t = 1;
